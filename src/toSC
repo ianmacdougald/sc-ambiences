@@ -13,8 +13,8 @@ if [[ $OSTYPE == "darwin"* ]]; then
         echo "Then install it in your Applications folder"
         exit 
     fi
-else if [[ $OSTYPE == "linux-gnu"* ]]; then 
-    toSC=$(which sclang)
+elif [[ $OSTYPE == "linux-gnu"* ]]; then 
+    toSC="$(which sclang)"
     if [[ -z $toSC ]]; then 
         echo "WARNING: SuperCollider is not properly installed"
         echo "Download SuperCollider at https://supercollider.github.io"
