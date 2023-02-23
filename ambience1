@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 DIR=$(readlink -f $0)
-DIR="$(dirname "${DIR}")" 
+DIR="$(dirname "${DIR}")"
 
 cd $DIR/src
+./toSC $PWD/ambience1.scd
 
-./toSC ambience1.scd
 exit

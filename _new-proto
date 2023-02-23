@@ -34,12 +34,14 @@ MAKE_SCRIPTS () {
     script=$DIR/${script##*/}
 
     if [[ ! -e $script ]]; then
+        cmdString='./toSC $PWD/'
+        cmdString=$cmdString"${1##*/}.scd"
 
         echo "#!/usr/bin/env bash" >> $script
         echo -e '\nDIR=$(readlink -f $0)' >> $script
         echo 'DIR="$(dirname "${DIR}")"' >> $script
         echo -e '\ncd $DIR/src' >> $script
-        echo -e "./toSC ${1##*/}.scd" >> $script
+        echo -e $cmdString >> $script
         echo -e "\nexit" >> $script
 
         chmod +x $script

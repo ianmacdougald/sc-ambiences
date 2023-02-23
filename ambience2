@@ -4,6 +4,6 @@ DIR=$(readlink -f $0)
 DIR="$(dirname "${DIR}")"
 
 cd $DIR/src
-./toSC ambience2.scd
+./toSC $PWD/ambience2.scd
 
 exit
