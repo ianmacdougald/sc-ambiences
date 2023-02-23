@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+PROG="${0##*/}"
+
+DIR=$(readlink -f $0)
+DIR="$(dirname "${DIR}")" 
+
+SCRIPTS=$DIR/src
+
+MAKE_SCRIPTS () { 
+    # First, create a new .scd template in the src directory
+    local script=$1
+
+    if [[ $script != *.scd ]]; then 
+        script="${1%.*}.scd"
+    fi
+
+    script=$SCRIPTS/$script
+
+    if [[ ! -e $script ]]; then 
+        echo /\* What does this script do? >> $script
+        echo "" >> $script
+        echo \*/ >> $script
+
+        STRING="var main = (PathName(thisProcess.nowExecutingPath).pathOnly+/+\"setup.scd\").load;\n\nmain.value { \n\t//Write your code here...\n\n\texit(0);\n};"
+
+        echo -e $STRING >> $script
+    else 
+        echo "$PROG: $script already exists..."
+    fi
+
+    # Second, create a new template for 
+    script=${1%%.*}
+    script=$DIR/${script##*/}
+
+    if [[ ! -e $script ]]; then
+
+        echo "#!/usr/bin/env bash" >> $script
+        echo -e '\nDIR=$(readlink -f $0)' >> $script
+        echo 'DIR="$(dirname "${DIR}")"' >> $script
+        echo -e '\ncd $DIR/src' >> $script
+        echo -e "./toSC ${1##*/}.scd" >> $script
+        echo -e "\nexit" >> $script
+
+        chmod +x $script
+    else 
+        echo "$PORG: $script already exists..."
+    fi
+}
+
+if [[ $# -eq 0 ]]; then 
+    echo "What is the name of the new protoype?"
+    read FILE
+    MAKE_SCRIPTS $FILE
+else 
+    for ARG in "$@"; do
+        MAKE_SCRIPTS $ARG
+    done
+fi
+
