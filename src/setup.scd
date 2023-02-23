@@ -1,6 +1,20 @@
 /* This script boots the SuperCollider server*/
 { | func({}) |
-	var name = PathName(thisProcess.nowExecutingPath).fileName;
+    var name; 
+
+    case 
+    { thisProcess.argv.notEmpty } { 
+        name = PathName(thisProcess.argv[0]).fileName;
+    }
+    { thisProcess.nowExecutingPath.notNil } { 
+        name = PathName(thisProcess.nowExecutingPath).fileName; 
+    } 
+    // default
+    { 
+        "WARNING: Path not properly supplied to setup".postln; 
+        "Exiting...".postln; 
+        exit(0);
+    };
 
 	fork {
 		var segment = {
