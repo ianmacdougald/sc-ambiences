@@ -1,18 +1,18 @@
 /* This script boots the SuperCollider server*/
 { | func({}) |
-    var name; 
+    var name;
 
-    case 
-    { thisProcess.argv.notEmpty } { 
+    case
+    { thisProcess.argv.notEmpty } {
         name = PathName(thisProcess.argv[0]).fileName;
     }
-    { thisProcess.nowExecutingPath.notNil } { 
-        name = PathName(thisProcess.nowExecutingPath).fileName; 
-    } 
+    { thisProcess.nowExecutingPath.notNil } {
+        name = PathName(thisProcess.nowExecutingPath).fileName;
+    }
     // default
-    { 
-        "WARNING: Path not properly supplied to setup".postln; 
-        "Exiting...".postln; 
+    {
+        "WARNING: Path not properly supplied to setup".postln;
+        "Exiting...".postln;
         exit(0);
     };
 
@@ -273,12 +273,13 @@
 				toAudio = toAudio.pathOnly[0..(toAudio.pathOnly.size - toAudio.folderName.size - 2)];
 				toAudio = PathName(toAudio+/+"audio");
 
-
 				toAudio.files.do { | item |
 					var name = item.fileNameWithoutExtension;
 					~buffers.add(name.asSymbol
 						-> Buffer.read(s, item.fullPath, action: { | b | b.normalize }));
 				};
+
+				s.sync;
 			};
 
 			segment.value;
