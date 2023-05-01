@@ -109,7 +109,6 @@ main.value {
 		\q, Pexprand(0.05, 0.84, inf),
 		\amp, [ 3, 3, 3, 1, 1, 1 ].normalizeSum * 0.dbamp,
 		\noiseamp, [ 0.2, 0.1, 0.1, 0.1, 0.1 ],
-		\mtranspose, Pseq([ [ -7, -7, -7, 0, 0, 0 ], 3, 0, -2, [ -7, -7, -7, 0, 0, 0 ] ].rotate(0), 1).stutter(16),
 		\mtranspose, Pseq([ 4, 4, -3, -3, 0, -2, -2 ], inf).stutter(8),
 		\octave, [ 4, 4, 4, 5, 5, 5, 3, 3, 3 ] - 1,
 		\vibrate, Pexprand(0.05, 0.75, inf),
